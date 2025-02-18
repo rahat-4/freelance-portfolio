@@ -4,6 +4,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { CiMenuFries } from "react-icons/ci";
+import { DialogTitle } from "@radix-ui/react-dialog";
 
 const links = [
   {
@@ -36,6 +37,8 @@ const MobileNav = () => {
         <CiMenuFries className="text-[32px] text-accent" />
       </SheetTrigger>
       <SheetContent className="flex flex-col">
+        {/* Accessibility Title */}
+        <DialogTitle></DialogTitle>
         {/* logo */}
         <div className="mt-32 mb-40 text-center text-2xl">
           <Link href="/">
