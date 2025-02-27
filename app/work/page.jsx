@@ -19,6 +19,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Description } from "@radix-ui/react-dialog";
 
+import WorkSliderButton from "@/components/WorkSliderButton";
+
 const projects = [
   {
     num: "01",
@@ -58,10 +60,17 @@ const projects = [
 const Work = () => {
   const [project, setProject] = useState(projects[0]);
 
+  const handleSlideChange = (swiper) => {
+    setProject(projects[swiper.realIndex]);
+  };
+
   return (
     <motion.section
       initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+      animate={{
+        opacity: 1,
+        transition: { delay: 2.4, duration: 0.4, ease: "easeIn" },
+      }}
       className="min-h-[80vh] flex flex-col justify-center py-12 xl:px-0"
     >
       <div className="container mx-auto">
@@ -131,8 +140,29 @@ const Work = () => {
               onSlideChange={handleSlideChange}
             >
               {projects.map((project, index) => {
-                return <SwiperSlide key={index}>{project.title}</SwiperSlide>;
+                return (
+                  <SwiperSlide key={index} className="w-full">
+                    <div className="h-[460px] relative group flex justify-center items-center bg-pink-50/20">
+                      {/* overlay */}
+                      <div className="absolute bottom-0 top-0 w-full h-full bg-black/10 z-10"></div>
+                      {/* image */}
+                      <div className="relative w-full h-full">
+                        <Image
+                          src={project.image}
+                          fill
+                          alt=""
+                          className="object-cover"
+                        />
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                );
               })}
+              {/* slider button */}
+              <WorkSliderButton
+                containerStyles="flex gap-2 absolute right-0 bottom-[calc(50%_-_22px)] z-20 xl:bottom-0 w-full justify-between xl:w-max xl:justify-none"
+                btnStyles="bg-accent hover:bg-accent-hover text-primary text-[22px] w-[44px] h-[44px] flex items-center justify-center rounded-full transition-all"
+              />
             </Swiper>
           </div>
         </div>
